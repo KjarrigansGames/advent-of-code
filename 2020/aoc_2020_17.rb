@@ -21,7 +21,9 @@ p direction_vectors.size
 
 DATA.each_with_index do |line, y|
   line.chomp.each_char.with_index(0) do |char, x|
-    infinite_grid[Vector[x, y, 0, 0]] = char == '#' ? ACTIVE : INACTIVE
+    next if char == '.'
+
+    infinite_grid[Vector[x, y, 0, 0]] = ACTIVE
   end
 end
 p infinite_grid
@@ -80,8 +82,7 @@ p infinite_grid
           new_state = INACTIVE
           new_state = ACTIVE if current_state == ACTIVE && active_neighbours.between?(2,3)
           new_state = ACTIVE if current_state == INACTIVE && active_neighbours == 3
-
-  #         binding.irb if z == -2 && new_state == ACTIVE
+          next if new_state == INACTIVE
 
           new_grid[cube] = new_state
         end
@@ -89,20 +90,6 @@ p infinite_grid
     end
   end
   infinite_grid = new_grid
-
-  # Debugging
-#   (min_z..max_z).each do |z|
-#     puts "z=#{z}"
-#     (min_y..max_y).each do |y|
-#       (min_x..max_x).each do |x|
-#         cube = Vector[x, y, z]
-#         print infinite_grid[cube] == ACTIVE ? '#' : '.'
-#       end
-#       puts
-#     end
-#   end
-
-#   binding.irb
 end
 
 print "Current Active Cubes: "
