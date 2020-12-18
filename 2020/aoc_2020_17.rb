@@ -45,8 +45,6 @@ p infinite_grid
   min_w = 0
   max_w = 0
   infinite_grid.each do |pos, state|
-    next if state == INACTIVE
-
     min_x = [min_x, pos[0]].min
     max_x = [max_x, pos[0]].max
     min_y = [min_y, pos[1]].min
@@ -79,12 +77,10 @@ p infinite_grid
             break if active_neighbours > 3
           end
 
-          new_state = INACTIVE
-          new_state = ACTIVE if current_state == ACTIVE && active_neighbours.between?(2,3)
-          new_state = ACTIVE if current_state == INACTIVE && active_neighbours == 3
-          next if new_state == INACTIVE
-
-          new_grid[cube] = new_state
+          if (current_state == ACTIVE && active_neighbours.between?(2,3)) ||
+             (current_state == INACTIVE && active_neighbours == 3)
+            new_grid[cube] = ACTIVE
+          end
         end
       end
     end
