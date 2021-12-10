@@ -1,0 +1,18 @@
+# Only works for Blender 3.0+
+import bpy
+import bpy.ops
+import bmesh
+
+f = open("/tmp/input.txt")
+data = f.readlines()
+
+for y in range(0, len(data)):
+    row = data[y].strip()
+    for x in range(0, len(row)):
+        height = int(row[x])
+        bpy.ops.mesh.primitive_cube_add(size=1,scale=(1,1,height),location=(x,y,height/2.0))
+
+    # Merge after each row to keep the number of objects low
+    for o in bpy.data.objects:
+        o.select_set(True)
+    bpy.ops.object.join()
