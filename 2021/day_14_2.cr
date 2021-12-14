@@ -49,8 +49,7 @@ def part2(input, ticks=10)
     ranking[pair[0,1]] += amount
   end
   # The "last" character in each squence has to be counted as well
-  pair, amount = poly.to_a.last
-  ranking[pair[1,1]] += 1
+  ranking[polymer[-1,1]] += 1
   ranking = ranking.values.sort
   ranking[-1] - ranking[0]
 end
@@ -66,5 +65,5 @@ puts part2(input, ticks: 10)
 print "Sample 2188189693529 == "
 puts part2(SAMPLE, ticks: 40)
 
-print "Part 2 (+-1): "
+print "Part 2: "
 puts part2(input, ticks: 40)
